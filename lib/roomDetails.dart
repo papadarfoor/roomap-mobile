@@ -123,7 +123,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                             child: Text('Your location is: '+room_name,
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.blue
+                                  color: Color.fromARGB(255, 198, 46, 0),
                                 )),
                           ),
                         ),

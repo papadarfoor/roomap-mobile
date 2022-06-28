@@ -29,11 +29,11 @@ class _RoomPathsState extends State<RoomPaths> {
   }
 
   Future getRoomInfo() async {
-    var url = Uri.parse(
-        baseUrl+'/functions/customer/pathways/getOnePathway.php?room_id=' +
-            await getRoom() +
-            '&room_name=' +
-            await getRoomName());
+    var url = Uri.parse(baseUrl +
+        '/functions/customer/pathways/getOnePathway.php?room_id=' +
+        await getRoom() +
+        '&room_name=' +
+        await getRoomName());
 
     var response = await http.get(url);
     final details = json.decode(response.body);
@@ -70,7 +70,8 @@ class _RoomPathsState extends State<RoomPaths> {
                                 Navigator.pop(context);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 20),
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Image.asset(
@@ -81,22 +82,20 @@ class _RoomPathsState extends State<RoomPaths> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right:20.0),
+                              padding: const EdgeInsets.only(right: 20.0),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage()));
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()));
                                 },
                                 child: Icon(
-              Icons.qr_code_scanner_outlined,
-            ),
+                                  Icons.qr_code_scanner_outlined,
+                                ),
                               ),
                             )
                           ],
-                          
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
@@ -166,39 +165,43 @@ class _RoomPathsState extends State<RoomPaths> {
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(),
-                                                    child: 
+                                                    child: SizedBox(
+                                                      width: 318,
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: InkWell(
+                                                              onTap: () async {
+                                                                SharedPreferences
+                                                                    preferences =
+                                                                    await SharedPreferences
+                                                                        .getInstance();
 
-                                                SizedBox(
-            width: 318,
-            child: Row(
-              children: [
-          
-                Expanded(
-                    child: InkWell(
-                      onTap: () async {
+                                                                preferences.setString(
+                                                                    'path',
+                                                                    path_direction[
+                                                                        index]);
 
-                          SharedPreferences preferences =
-                                          await SharedPreferences.getInstance();
-
-                        preferences.setString(
-                                          'path',  path_direction[index]);
-
-                       
-                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PathImage()));
-                      },
-                      child: Text(path_direction[index],
-                        overflow: TextOverflow.ellipsis, // default is .clip
-                        maxLines: 2,),
-                    ),// default is 1
-                ),
-              
-              ],
-            ),
-          ),
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                PathImage()));
+                                                              },
+                                                              child: Text(
+                                                                path_direction[
+                                                                    index],
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis, // default is .clip
+                                                                maxLines: 2,
+                                                              ),
+                                                            ), // default is 1
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
