@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:Roomap/homepage.dart';
 import 'package:Roomap/main.dart';
 import 'package:Roomap/roomDetails.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,8 @@ class LocationDetails extends StatefulWidget {
 
 class _LocationDetailsState extends State<LocationDetails> {
   var rooms;
+    List room_name = [];
+  String searchString = "";
 
   getBuilding() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -33,6 +36,22 @@ class _LocationDetailsState extends State<LocationDetails> {
       rooms = details;
     });
 
+
+
+    print(rooms);
+    return rooms;
+  }
+
+
+        Future<void> filterSearchResults(query) async {
+    var url = Uri.parse(baseUrl +
+        '/functions/customer/rooms/searchRooms.php?building_id='+await getBuilding()+'&search_string=' +
+        query);
+    var response = await http.get(url);
+    final details = json.decode(response.body);
+    setState(() {
+      rooms = details;
+    });
     print(rooms);
     return rooms;
   }
@@ -53,6 +72,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                         child: CircularProgressIndicator(),
                       )
                     : Column(children: [
+                       
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -103,6 +123,27 @@ class _LocationDetailsState extends State<LocationDetails> {
                         SizedBox(
                           height: 30,
                         ),
+                        Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          searchString = value.toLowerCase();
+                          EasyDebounce.debounce(
+                              'my-debouncer', // <-- An ID for this particular debouncer
+                              Duration(
+                                  milliseconds:
+                                      500), // <-- The debounce duration
+                              () =>        filterSearchResults(searchString)
+                              );
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Search for a room',
+                        suffixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
                         SizedBox(
                             child: ListView.builder(
                                 //  physics: NeverScrollableScrollPhysics(),

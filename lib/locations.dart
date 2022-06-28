@@ -101,19 +101,15 @@ class _LocationsState extends State<Locations> {
                                 },
                                 child: Container(
                                   child: Card(
-                                    color: Color.fromARGB(255, 0, 188, 198),
+                                    color: Color.fromARGB(255, 198, 46, 0),
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 50, left: 50.0, right: 50),
-                                            child: /* Image.asset(
-                                      'images/folder.png',
-                                    ), */
-                                                Text('')),
+                                        Image.asset('images/building.png',height: 40,),
                                         Text(
                                           buildings[index]['building_name'],
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                                          
                                         )
                                       ],
                                     ),
