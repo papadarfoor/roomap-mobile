@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:Roomap/main.dart';
+import 'package:Roomap/pathImage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'homepage.dart';
 
 class RoomPaths extends StatefulWidget {
@@ -167,16 +166,7 @@ class _RoomPathsState extends State<RoomPaths> {
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(),
-                                                    child: /* Text(
-                                                      path_direction[index],
-                                                      // path_direction[index]['room']['pathway_direction'],
-                                                      // textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                          // fontWeight: FontWeight.bold,
-                                                          color: Color.fromARGB(
-                                                              255, 0, 0, 0),
-                                                          fontSize: 18),
-                                                    ), */
+                                                    child: 
 
                                                 SizedBox(
             width: 318,
@@ -184,9 +174,26 @@ class _RoomPathsState extends State<RoomPaths> {
               children: [
           
                 Expanded(
-                    child: Text(path_direction[index],
-                      overflow: TextOverflow.ellipsis, // default is .clip
-                      maxLines: 2,),// default is 1
+                    child: InkWell(
+                      onTap: () async {
+
+                          SharedPreferences preferences =
+                                          await SharedPreferences.getInstance();
+
+                        preferences.setString(
+                                          'path',  path_direction[index]);
+
+                       
+                         Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PathImage()));
+                      },
+                      child: Text(path_direction[index],
+                        overflow: TextOverflow.ellipsis, // default is .clip
+                        maxLines: 2,),
+                    ),// default is 1
                 ),
               
               ],
