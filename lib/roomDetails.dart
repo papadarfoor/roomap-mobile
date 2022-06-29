@@ -161,7 +161,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                           child: TextField(
                             onChanged: (value) {
                               setState(() {
-                                searchString = value.toLowerCase();
+                                searchString = value;
                                 EasyDebounce.debounce(
                                     'my-debouncer', // <-- An ID for this particular debouncer
                                     Duration(
