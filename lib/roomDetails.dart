@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Roomap/main.dart';
 import 'package:Roomap/roomPaths.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,7 @@ class RoomDetails extends StatefulWidget {
 class _RoomDetailsState extends State<RoomDetails> {
   var destination;
   var room_name;
+  String searchString = "";
 
   getRoom() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -49,6 +51,22 @@ class _RoomDetailsState extends State<RoomDetails> {
     return room_name;
   }
 
+  Future<void> filterSearchResults(query) async {
+
+    var url = Uri.parse(baseUrl +
+        '/functions/customer/pathways/searchPathways.php?search_string=' +
+        query +
+        '&room_id=' +
+        await getRoom());
+    var response = await http.get(url);
+    final details = json.decode(response.body);
+    setState(() {
+      destination = details;
+    });
+    print(destination);
+    return destination;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -75,7 +93,8 @@ class _RoomDetailsState extends State<RoomDetails> {
                                 Navigator.pop(context);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 20),
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Image.asset(
@@ -86,22 +105,20 @@ class _RoomDetailsState extends State<RoomDetails> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right:20.0),
+                              padding: const EdgeInsets.only(right: 20.0),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage()));
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()));
                                 },
                                 child: Icon(
-              Icons.qr_code_scanner_outlined,
-            ),
+                                  Icons.qr_code_scanner_outlined,
+                                ),
                               ),
                             )
                           ],
-                          
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
@@ -120,7 +137,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                           padding: const EdgeInsets.only(bottom: 5.0),
                           child: Align(
                             alignment: Alignment.topCenter,
-                            child: Text('Your location is: '+room_name,
+                            child: Text('Your location is: ' + room_name,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Color.fromARGB(255, 198, 46, 0),
@@ -131,14 +148,32 @@ class _RoomDetailsState extends State<RoomDetails> {
                           height: 30,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 5.0,left: 20),
+                          padding: const EdgeInsets.only(bottom: 5.0, left: 20),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text('Where would you like to go?',
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black
-                                )),
+                                    fontSize: 14, color: Colors.black)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                searchString = value.toLowerCase();
+                                EasyDebounce.debounce(
+                                    'my-debouncer', // <-- An ID for this particular debouncer
+                                    Duration(
+                                        milliseconds:
+                                            500), // <-- The debounce duration
+                                    () => filterSearchResults(searchString));
+                              });
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Search for a destination',
+                              suffixIcon: Icon(Icons.search),
+                            ),
                           ),
                         ),
                         SizedBox(
