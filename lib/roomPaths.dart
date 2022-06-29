@@ -182,6 +182,11 @@ class _RoomPathsState extends State<RoomPaths> {
                                                                     path_direction[
                                                                         index]);
 
+                                                                         preferences.setInt(
+                                                                    'image_index',
+                                                                    
+                                                                        index);
+
                                                                 Navigator.push(
                                                                     context,
                                                                     MaterialPageRoute(
