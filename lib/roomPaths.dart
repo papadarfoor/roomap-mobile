@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:Roomap/main.dart';
-import 'package:Roomap/pathImage.dart';
+import 'package:RooMap/main.dart';
+import 'package:RooMap/pathImage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -182,10 +182,9 @@ class _RoomPathsState extends State<RoomPaths> {
                                                                     path_direction[
                                                                         index]);
 
-                                                                         preferences.setInt(
+                                                                preferences.setInt(
                                                                     'image_index',
-                                                                    
-                                                                        index);
+                                                                    index);
 
                                                                 Navigator.push(
                                                                     context,

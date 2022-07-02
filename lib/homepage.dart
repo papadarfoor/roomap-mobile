@@ -1,5 +1,5 @@
-import 'package:Roomap/locations.dart';
-import 'package:Roomap/scan.dart';
+import 'package:RooMap/locations.dart';
+import 'package:RooMap/scan.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,7 +15,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,

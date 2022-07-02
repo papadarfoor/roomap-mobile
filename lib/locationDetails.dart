@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:Roomap/homepage.dart';
-import 'package:Roomap/main.dart';
-import 'package:Roomap/roomDetails.dart';
+import 'package:RooMap/homepage.dart';
+import 'package:RooMap/main.dart';
+import 'package:RooMap/roomDetails.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +16,7 @@ class LocationDetails extends StatefulWidget {
 
 class _LocationDetailsState extends State<LocationDetails> {
   var rooms;
-    List room_name = [];
+  List room_name = [];
   String searchString = "";
 
   getBuilding() async {
@@ -27,25 +27,24 @@ class _LocationDetailsState extends State<LocationDetails> {
   }
 
   Future getRooms() async {
-    var url = Uri.parse(
-        baseUrl+'/functions/customer/rooms/getRooms.php?building_id=' +
-            await getBuilding());
+    var url = Uri.parse(baseUrl +
+        '/functions/customer/rooms/getRooms.php?building_id=' +
+        await getBuilding());
     var response = await http.get(url);
     final details = json.decode(response.body);
     setState(() {
       rooms = details;
     });
 
-
-
     print(rooms);
     return rooms;
   }
 
-
-        Future<void> filterSearchResults(query) async {
+  Future<void> filterSearchResults(query) async {
     var url = Uri.parse(baseUrl +
-        '/functions/customer/rooms/searchRooms.php?building_id='+await getBuilding()+'&search_string=' +
+        '/functions/customer/rooms/searchRooms.php?building_id=' +
+        await getBuilding() +
+        '&search_string=' +
         query);
     var response = await http.get(url);
     final details = json.decode(response.body);
@@ -72,7 +71,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                         child: CircularProgressIndicator(),
                       )
                     : Column(children: [
-                       
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -82,7 +80,8 @@ class _LocationDetailsState extends State<LocationDetails> {
                                 Navigator.pop(context);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 20.0, top: 20),
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Image.asset(
@@ -93,22 +92,20 @@ class _LocationDetailsState extends State<LocationDetails> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right:20.0),
+                              padding: const EdgeInsets.only(right: 20.0),
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage()));
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()));
                                 },
                                 child: Icon(
-              Icons.qr_code_scanner_outlined,
-            ),
+                                  Icons.qr_code_scanner_outlined,
+                                ),
                               ),
                             )
                           ],
-                          
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5.0),
@@ -124,26 +121,25 @@ class _LocationDetailsState extends State<LocationDetails> {
                           height: 30,
                         ),
                         Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          searchString = value.toLowerCase();
-                          EasyDebounce.debounce(
-                              'my-debouncer', // <-- An ID for this particular debouncer
-                              Duration(
-                                  milliseconds:
-                                      500), // <-- The debounce duration
-                              () =>        filterSearchResults(searchString)
-                              );
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Search for a room',
-                        suffixIcon: Icon(Icons.search),
-                      ),
-                    ),
-                  ),
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                searchString = value.toLowerCase();
+                                EasyDebounce.debounce(
+                                    'my-debouncer', // <-- An ID for this particular debouncer
+                                    Duration(
+                                        milliseconds:
+                                            500), // <-- The debounce duration
+                                    () => filterSearchResults(searchString));
+                              });
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Search for a room',
+                              suffixIcon: Icon(Icons.search),
+                            ),
+                          ),
+                        ),
                         SizedBox(
                             child: ListView.builder(
                                 //  physics: NeverScrollableScrollPhysics(),
@@ -158,8 +154,8 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       preferences.setString(
                                           'room_id', rooms[index]['id']);
 
-                                       preferences.setString(
-                                          'room_name', rooms[index]['room_name']);
+                                      preferences.setString('room_name',
+                                          rooms[index]['room_name']);
 
                                       Navigator.push(
                                           context,

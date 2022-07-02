@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:Roomap/main.dart';
+import 'package:RooMap/main.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,10 +85,9 @@ class _PathImageState extends State<PathImage> {
               child: CircularProgressIndicator(),
             )
           : Center(
-              child: path_image == null ?
-              CircularProgressIndicator()
-              :
-              FullScreenWidget(child: Image.network(path_image[index])),
+              child: path_image == null
+                  ? CircularProgressIndicator()
+                  : FullScreenWidget(child: Image.network(path_image[index])),
             ),
     );
   }

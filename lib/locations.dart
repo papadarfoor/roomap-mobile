@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:Roomap/locationDetails.dart';
-import 'package:Roomap/main.dart';
+import 'package:RooMap/locationDetails.dart';
+import 'package:RooMap/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -103,13 +103,18 @@ class _LocationsState extends State<Locations> {
                                   child: Card(
                                     color: Color.fromARGB(255, 198, 46, 0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Image.asset('images/building.png',height: 40,),
+                                        Image.asset(
+                                          'images/building.png',
+                                          height: 40,
+                                        ),
                                         Text(
                                           buildings[index]['building_name'],
-                                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                                          
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),

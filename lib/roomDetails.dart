@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Roomap/main.dart';
-import 'package:Roomap/roomPaths.dart';
+import 'package:RooMap/main.dart';
+import 'package:RooMap/roomPaths.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +52,6 @@ class _RoomDetailsState extends State<RoomDetails> {
   }
 
   Future<void> filterSearchResults(query) async {
-
     var url = Uri.parse(baseUrl +
         '/functions/customer/pathways/searchPathways.php?search_string=' +
         query +

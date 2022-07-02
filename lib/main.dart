@@ -1,23 +1,21 @@
-import 'package:Roomap/scan.dart';
+import 'package:RooMap/scan.dart';
 import 'package:flutter/material.dart';
-import 'package:Roomap/homepage.dart';
+import 'package:RooMap/homepage.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-  var baseUrl = 'https://final-project-roomap.herokuapp.com';
+var baseUrl = 'https://final-project-RooMap.herokuapp.com';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Roomap',
+      title: 'RooMap',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
