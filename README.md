@@ -1,4 +1,4 @@
-# rooms
+# roomap
 
 Indoor Navigation App.
 
