@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:RooMap/main.dart';
+import 'package:RooMap/mappedScreen.dart';
 import 'package:RooMap/roomPaths.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,14 @@ class _RoomDetailsState extends State<RoomDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.location_pin),
+          backgroundColor: Color.fromARGB(255, 198, 46, 0),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MappedScreen()));
+          },
+        ),
         body: SingleChildScrollView(
             child: SafeArea(
                 child: destination == null

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:RooMap/directionscreen.dart';
 import 'package:RooMap/main.dart';
 import 'package:RooMap/pathImage.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,14 @@ class _RoomPathsState extends State<RoomPaths> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+            backgroundColor: Color.fromARGB(255, 198, 46, 0),
+        child: Icon(Icons.directions),
+        onPressed: (){
+           Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DirectionScreen()));
+        }
+        ),
         body: SingleChildScrollView(
             child: SafeArea(
                 child: path_direction == null
